@@ -1,0 +1,79 @@
+DATA PRE-PROCESSING
+============================================================================================================================================================================================================
+-THE PROCESS OF CONVERTING OR MAPPING DATA FROM THE INITIAL 'RAW' FORM INTO ANOTHER FORMAT, IN ORDER TO PREPARE THE DATA FOR FURTHER ANALYSIS, AKA DATA CLEANING/DATA WRANGLING
+
+-ACCESS COLUMNS: DF["COLUMN NAME"]=DF["COLUMN NAME"] + VALUE
+	-DF["CAR NAME"]=DF["CAR NAME"]+1
+============================================================================================================================================================================================================
+MISSING VALUES
+-OCCURS WHEN NO DATA VALUE IS STORED FOR A VARIABLE(FEATURE) IN AN OBSERVATION
+-COULD BE REPRESENTED AS "?" "N/A" 0 OR JUST A BLANK CELL
+-DROP THE MISSING VALUES: DROP VARIABLE, DROP THE DATA ENTRY
+	-DATAFRAME.DROPNA()
+		-AXIS=0 DROP THE ENTIRE ROW
+		-AXIS=1 DROP THE ENTIRE COLUMN
+	-DF.DROPNA(SUBSET=["PRICE"], AXIS=0, INPLACE=TRUE)
+-REPLACE THE MISSING VALUE: REPLACE IT AN AVERAGE(SIMILAR DATAPOINT, FREQUENCY, BASED ON OTHER FUNCTIONS)
+
+-REPLACE MISSING VALUES: DATAFRAME.REPLACE(MISSING_VALUE, NEW_VALUE)
+	-REPLACE WITH SIMILAR VALUE, TYPICALLY MEAN:
+		MEAN = DF["COLUMN NAME"].MEAN()
+		DF["COLUMN NAME"].REPLACE(NP.NAN, MEAN)
+============================================================================================================================================================================================================
+DATA FORMATTING
+-COLLECTED FROM DIFF PLACES AND STORED IN DIFF FORMATS
+-BRINGING DATA INTO A COMMON STANDARD OF EXPRESSION ALLOWS USER TO MAKE MEANINGFUL COMPARISON
+Identify and Handle Missing Values: Drop rows with incomplete information and impute missing data using the mean values.
+
+Understand Data Formatting: Wrangle features in a dataset and make them meaningful for data analysis.
+
+-APPLYING CALCULATIONS TO ENTIRE COLUMNS:
+	DF["COLUMN"] = VALUE/DF["COLUMN"]
+		DF["CITY-MPG"] = 235/DF["CITY-MPG"]
+		DF.RENAME(COLUMNS={CITY-MPG":"CITY-L/100LM}, INPLACE=TRUE)
+-DATATYPE IN PYTHON/PANDAS:
+	-OBJECTS(STRING), INT64, FLOAT64
+
+-ID DATA TYPE: DATAFRAME.DTYPES()
+-CONVERT DATA TYPE: DATAFRAME.ASTYPE()
+	DF["PRICE"]=DF["PRICE"].ASTYPE("INT")
+==============================================================================================================================================================================================================
+DATA NORMALIZATION
+-UNIFORM THE FEATURES VALUE WITH DIFF RANGE
+Apply normalization to a data set: By understanding the relevance of using feature scaling on your data and how normalization and standardization have varying effects on your data analysis.
+
+-METHODS OF NORMALIZING DATA:
+	-SIMPLE FEATURE SCALING: ***NEW VALUES RANGE FROM 0 TO 1
+		Xnew = (Xold/Xmax)				
+		DF["COLUMN"] = DF["COLUMN"]/DF["COLUMN"].MAX()
+
+
+	-MIN-MAX: ***NEW VALUES RANGES FROM 0 TO 1
+		Xnew = ((Xold-Xmin)/(Xmax-Xmin))		
+		DF["COLUMN"] = (DF["COLUMN"]-DF["COLUMN"].MIN())/(DF["COLUMN"].MAX()-DF["COLUMN"].MIN())
+
+	-Z-SCORE/STANDARD SCORE: ***NEW VALUES RANGES AROUND 0 AND TYPICALLY WITHIN -3 TO +3
+		Xnew = ((Xold-MEAN)/STANDARD DEVIATION SIGMA)
+		DF["COLUMN"] = (DF["COLUMN"]-DF["COLUMN"].MEAN())/DF["COLUMN"].STD()
+
+==============================================================================================================================================================================================================
+BINNING IN PYTHON
+-GROUG VALUES TOGETHER INTO "BINS"
+-CONVERTS NUMERIC INTO CATERGORICAL VARIABLES
+-GROUP A SET OF NUMERICAL VALUES INTO SETS OF "BINS"
+-INCREASE ACCURACY IN PREDICTIVE MODELS
+-BETTER UNDERSTANDING OF DATA DISTRIBUTION
+-NUM PY FUNCTION LINSPACE:
+	BINS = NP.LINSAPCE(MIN(DF["COLUMN"]),MAX(DF["COLUMN"]), #)	***# IS THE DIVIDERS THAT ARE 										EQUAL DISTACE APART
+	GROUPS_NAME = ["BIN1","BIN2","BIN3"]
+	(DF["COLUMN"]) = PD.CUT(DF["COLUMN"]), BINS, LABELS=GROUP_NAME, INCLUDE_LOWEST=TRUE)
+
+==============================================================================================================================================================================================================
+TURNING CATEGORICAL VARIABLES INTO QUANTITATIVE VARIBLES IN PYTHON
+-MOST STATISTICAL MODELS CANNOT TAKE IN THE OBJECTS/STRINGS AS INPUT YET THE MODEL TRAINING ONLY TAKE THE NUMBERS AS INPUT
+
+-SOLUTION: ADD DUMMY VARIABLES TO EACH UNIQUE CATEGOERY, EITHER 0 OR 1 IN EACH CATEGORY
+	-"ONE-HOT ENCONDINGS
+-METHOD: USE PANDAS DUMMY METHOD TO REPLACE VARIABLES:CONVERT CATERGORICAL VARIABLES TO DUMMY VAr(0/1)
+	PD.GET_DUMMIES(DF['COLUMN'])
+		PD.GET_DUMMIES(DF['FUEL'])

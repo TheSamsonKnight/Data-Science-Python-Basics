@@ -1,0 +1,77 @@
+EXPLORATORY DATA ANALYSIS 
+============================================================================================================================================================================================================
+Describe Exploratory Data Analysis: By summarizing the main characteristics of the data and extracting valuable insights.
+
+Compute basic descriptive statistics: Calculate the mean, median, and mode using python and use it as a basis in understanding the distribution of the data.
+
+Create data groups: How and why you put continuous data in groups and how to visualize them.
+
+Define correlation as the linear association between two numerical variables: Use Pearson correlation as a measure of the correlation between two continuous variables
+
+Define the association between two categorical variables: Understand how to find the association of two variables using the Chi-square test for association and how to interpret them.
+
+-EDA: APPROACH TO ANALYZE DATA INORDER TO: 
+	-SUMMARIZE MAIN CHARACTERISTICS OF THE DATA
+	-GAIN BETTER UNDERSTANDING OF THE DATA SET
+	-UNCOVER RELATIONSHIPS B/W VARIABLES
+	-EXTRACT IMPORTANT VARIABLES
+-WHAT ARE THE CHARACTERISTICS THAT HAVE THE MOST IMPACT ON (VARIABLE)
+
+============================================================================================================================================================================================================
+DESCRIPTIVE STATISTICS
+-DESCRIBE BASIC FEATURES OF DATA
+-GIVING SHORT SUMMARIES ABOUT THE SAMPLE AND MEASURES OF THE DATA
+-DF.DESCRIBE() METHOD GIVES INFO 
+-VALUE_COUNTS() METHOD: SUMMARIZE CATEGORICAL DATA
+	VARIABLE = DF["COLUMN"].VALUE_COUNTS().TO_FRAME()
+
+-BOX PLOTS: SNS.BOXPLOT(X= "WHEELS", Y= "PRICE", DATA=DF)
+
+-SCATTER PLOTS: Y=DF["COLUMN"]
+		X=DF["COLUMN"]
+		PLT.SCATTER(X,Y)
+		PLT.TITLE("GRAPH NAME")
+		PLT.XLABEL("X NAME")
+		PLT.YLABEL("Y NAME")
+============================================================================================================================================================================================================
+GROUP BY
+-CAN BE APPLIED TO CATERGORICAL VARIABLES
+-GROUP DATA INTO CATEGORIES
+-SINGLE OR MULTI VARIABLES
+-EXAMPLE:	
+	DF_TEST = DF[['DRIVE-WHEELS', 'BODY-STYLE', 'PRICE']]
+	DF_GRP = DF_TEST.GROUPBY(['DRIVE-WHEELS', 'BODY-STYLE'], AS_INDEX=FALSE).MEAN()
+
+-PIVOT(): ONE VARIABLE DISPLAYED ALONG THE COLUMNS AND THE OTHER VARIABLE DISPLAYED ALONG THE ROWS
+	DF_PIVOT = DF_GRP.PIVOT(INDEX= 'DRIVE-WHEELS', COLUMNS='BODY-STYLE')
+
+-HEATMAP: PLOT TARGET VARIABLE OVER MULTI VARIABLES
+	PLT.PCOLOR(DF_PIVOT, CMAP='RdBu')
+	PLT.COLORBAR()
+	PLT.SHOW()
+============================================================================================================================================================================================================
+CORRELATION
+-STATISTICAL METRIC FOR MEASURING TO WHAT EXTENT DIFF VARIABLES ARE INTERDEPENDENT
+-CORRELATION DOESNT IMPLY CAUSATION
+	SNS.REGPLOT(X="ENGINE-SIZE", Y="PRICE",DATA=DF)
+	PLT.YLIM(0,)
+
+-PEARSON CORRELATION: MEASURE THE STRENGTH OF THE CORRELATION BETWEEN TWO FEATURES
+	-MEASURES 2 VALUES: 
+		-CORRELATION COEFFICIENT
+			CLOSE TO +1:LARGE POSITIVE RELATIONSHIP
+			CLOSE TO -1:LARGE NEGATIVE RELATIONSHIP
+			CLOSE TO 0:NO RELATIONSHIP
+		-P-VALUE
+			<.001:STRONG CERTAINTY IN THE RESULT
+			<.05:MODERATE CERTAINTY IN THE RESULT
+			<.1:WEAK CERTAINTY IN THE RESULT
+			>.1:NO CERTAINTY IN THE RESULT
+	PEARSON_COEF, P_VALUE = STATS.PEARSONR(DF['HORSEPOWER'], DF['PRICE'])
+============================================================================================================================================================================================================
+CHI-SQUARE: ASSOCIATION BETWEEN CATEGORICAL VARIABLES
+-X^2
+-THE TEST IN INTENDED TO TEST HOW LIKELY IT IT THAT AN OBSERVED DISTRIBURION IS DUE TO CHANCE
+	-CHECKS A NULLL HYPOTHESES THAT THE VARIABLES ARE INDEPENDENT 
+	-DOESNT TELL YOU THE TYPE OF RELATIONSHIP THAT EXISTS BETWEEN BOTH VARIABLES, BUT ONLY THAT A 		RELATIONSHIP EXISTS 
+SCIPY.STATS.CHI2_CONTINGENCY(CONT_TABLE, CORRECTION=TRUE)

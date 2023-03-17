@@ -1,0 +1,34 @@
+JOIN OPERATOR
+======================================================================================================
+-COMBINES ROWS FROM TWO OR MORE TABLES, BASED ON RELATIONSHIP
+-PRIMARY KEY: UNIQUELY IDS EACH ROW IN A TABLE
+-FOREIGN KEY: REFERS TO A PRIMARY KEY OF ANOTHER TABLE
+
+TYPES:
+-INNER JOIN: DISPLAYS ONLY THE ROWS FROM TWO TABLES THAT HAVE MATCHING VALUE IN A COMMON COLUMN
+	-USUALLY THE PRIMARY KEY OF ONE TABLE THAT EXISTS AS A FOREIGN KEY IN THE OTHER TABLE
+
+-OUTER JOIN: RETURNS MATCHING ROWS, AND EVEN THE ROWS FROM ONE OR THE OTHER TABLE THAT DONT MATCH
+	-LEFT OUTER JOIN, RIGHT OUTER JOIN, FULL OUTER JOIN
+
+A join combines the rows from two or more tables based on a relationship between certain columns in these tables.
+
+To combine data from three or more different tables, you simply add new joins to the SQL statement. 
+
+There are two types of table joins: inner join and outer join; and three types of outer joins: left outer join, right outer join, and full outer join. 
+
+The most common type of join is the inner join, which matches the results from two tables and returns only the rows that match.
+
+You can use an alias as shorthand for a table or column name.
+
+You can use a self-join to compare rows within the same table.
+==============================================================================================================================================================================================================
+INNER JOIN
+-ROWS THAT HAVE MATCHING VALUE DONT APPEAR IN THE RESULT
+-CARTESIAN JOIN
+=============================================================================================================================================================================================================
+OUTER JOIN
+-LEFT OUTER JOIN: ALL ROWS FROM THE LEFT TABLE & ANY MATCHING ROWS FROM THE RIGHT TABLE
+-RIGHT OUTER JOIN: ALL ROWS FROM THE RIFHT TABLE & ANY MATCHING ROWS FROM THE LEFT TABLE
+	-returns all of the rows that an inner join returns and all the rows in the 2nd table that dont match in the 1st table
+-FULL OUTER JOIN: ALL ROWS FROM BOTH TABLES
