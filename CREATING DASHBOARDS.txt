@@ -1,0 +1,229 @@
+CREATING DASHBOARDS WITH PLOTLY AND DASH
+============================================================================================================================================================================================================
+
+- Best dashboards answer critical business questions. It will help business make informed decisions, thereby improving performance. 
+
+- Dashboards can produce real-time visuals. 
+
+- Plotly is an interactive, open-source plotting library that supports over 40 chart types. 
+
+- The web based visualizations created using Plotly python can be displayed in Jupyter notebook, saved to standalone HTML files, or served as part of pure Python-built web applications using Dash. 
+
+- Plotly Graph Objects is the low-level interface to figures, traces, and layout whereas plotly express is a high-level wrapper for Plotly. 
+
+- Dash is an Open-Source User Interface Python library for creating reactive, web-based applications. It is both enterprise-ready and a first-class member of Plotly’s open-source tools. 
+
+- Core and HTML are the two components of dash. 
+
+- The dash_html_components library has a component for every HTML tag. 
+
+- The dash_core_components describe higher-level components that are interactive and are generated with JavaScript, HTML, and CSS through the React.js library. 
+
+- A callback function is a python function that is automatically called by Dash whenever an input component's property changes. Callback function is decorated with `@app.callback` decorator. 
+
+- Callback decorator function takes two parameters: Input and Output. Input and Output to the callback function will have component id and component property. Multiple inputs or outputs should be enclosed inside either a list or tuple. 
+
+DASHBOARDS ANSWER IMPORTANT BUSINESS QUESTIONS
+-REAL TIME VISUAL
+-UNDERSTANDING BUSINESS MOVING PARTS/LOGIC
+-VISUALLY TRACK, ANALYZE, AND DISPLAY KEY PERFORMANCE INDICATORS(KPI)
+-TAKE INFORMED DECISIONS AND IMPROVE PERFORMANCE
+-REDUCED HOURS OF ANALYZING
+
+WEB BASED DASHBOARDING:
+DASH: PYTHON FRAMEWORK FOR BUILDIND WEB ANALYTIC APPLICATIONS
+	-WRITTEN WITH FLASK, PLOTLY.JS, REACT.JS
+	-WELL SUITED FOR BUILDING DATA VIZ APPS WITH HIGHLY CUSTOM USER INTERFACES
+
+PANEL:
+	-BOKEN, MATPLOTLIB, HOLOVIEWS
+	-WORKS WELL WITH JUPYTER NB, CREATES QUICK DATA EXPLORATION TOOLS
+	-ALSO FOR STANDALONE DEPLOYED APPS AND DASHBOARDS
+
+VOILA: TURNS JUPYTER NB INTO STANDALONE WEB APPLICATIONS
+
+STREAMLIT: DATA SCRIPTS BECOME SHAREABLE WEB APPS:
+	-EMBRACE PYTHON SCRIPTING
+	-TREAT WIDGETS AS VARIABLES
+	-REUSE DATA AND COMPUTATION
+
+TOOLS
+BOKEH: ACTS AS A SERVER FOR BOTH PLOTS AND DASHBOARDS
+	-PLOTTING LIB, A WIDGET, AND APP LIB
+	-PANEL: WEB BASED DASHBOARD TOOL(BUILT ON BOKEH)
+
+IPYWIDGETS: PROVIDES AN ARRAY OF JUPYTER COMPATIBLE WIDGETS
+	-AN INTERFACE SUPPORTED BY MANY PYTHON LIBS
+	-SHARING DASHBOARD REQUIRES SEPARATE DEPLOYABLE SERVER LIKE VOILA
+
+MATPLOTLIB: COMPREHENSIVE LIBRARY
+	-CREATES STATIC, ANIMATED, INTERACTIVE VIZ IN PYTHON
+
+BOWTIE: USERS BUILD DASHBOARDS IN PURE PYTHON
+
+FLASK: PYTHON BACKED WEB SERVER THAT CAN BUILD ARBITRARY WEB SITES
+	-INCLUDING WITH PYTHON PLOTS THAT FUNCTION AS FLASK DASHBOARDS
+======================================================================================================
+PLOTLY
+
+-AN INTERACTIVE, OPEN SOURCE PLOTTING LIBRARY
+-SUPPORTS OVER 40 UNIQUE CHART TYPES
+-AVAILABLE IN PYTHON, R, AND JS
+-BUILT ONTOP OF PLOTLY.JS LIBRARY
+-VIZ CAN BE DISPLAYED IN JUPYTER NB, SAVED TO HTML FILES, OR CAN BE USED IN DEVELOPING PYTHON WEB APPS
+
+PLOTLY GRAPH OBJECTS: LOW LEVEL INTERFACE TO FIGURES, TRACES, AND LAYOUT
+-GRAPH OBJECTS MODULE PROVIDES AN AUTOMATICALLY GENERATED HIERARCHY OF CLASSES(FIGURES/TRACES/LAYOUT)
+	-GRAPH OBJECTS ARE USED FOR REPRESENTING FIGURES WITH A TOP LEVEL CLASS
+	-PLOTLY.GRAPH_OBJECTS.FIGURE
+
+IMPORT PLOTLY.GRAPH_OBJECTS AS GO
+IMPORT PLOTLY.EXPRESS AS PX
+IMPROT NUMPY AS NP
+
+NP.RANDOM.SEED(10)
+X=NP.ARRANGE(12)
+Y=NP.RANDOM.RANDINT(50,500, SIZE=12)
+
+FIG=GO.FIGURE(DATA=GO.SCATTER(X=X, Y=Y))
+FIG.UPDATE_LAYOUT(TITLE='SIMPLE SAMPLE', XAXIS_TITLE='MONTH', YAXIS_TITLE='SALES')
+FIG.SHOW()
+
+
+PLOTLY EXPRESS: HIGH LEVEL WRAPPER
+-RECOMMENDED STARTING POINT FOR CREATING MOST COMMON FIGURES PROVIDED BY PLOTLY USING A SIMPLE SYNTAX
+	-USES GRAPH OBJECTS INTERNALLY
+
+PLOTLY.EXPRESS
+FIG=PX.LINE(X=X, Y=Y, TITLE='SIMPLE SAMPLE', LABELS=DICT(X='DICT',Y='SALES'))
+FIG.SHOW()
+
+======================================================================================================
+DASH
+
+-OPEN SOURCE USER INTERFACE PYTHON LIBRARY FROM PLOTLY
+	-REACTIVE, WEBBASED APPS
+-ENTERPRISE READY, 1ST CLASS MEMBER OF PLOTLY OPEN SOURCE TOOLS
+-DASH APPS ARE WEB SERVERS RUNNING ON FLASK AND COMMUNICATING JSON PACKETS OVER HTTP REQUESTS
+-FRONT END RENDERS COMPONENTS USING REACT.JS
+-EASY TO BUILD A GRAPHICAL USER INTERFACE
+	-ABSTRACTS ALL TECH REQUIRED TO BUILD THE APP
+-DECLARITIVE AND REACTIVE
+-OUTPUT CAN BE RENDERED IN WEB BROWSERS AND DEPLOYED TO SERVERS
+-SIMPLE REACTIVE DECORATOR FOR BINDING CODE TO UI
+	-INHERENTLY MOBILE AND CROSS-PLATFORM READY
+
+COMPONENTS
+CORE: IMPORT DASH_CORE_COMPONENTS AS DCC
+-HIGHER LEVEL COMPONENTS THAT ARE INTERACTIVE AND GENERATED WITH JS, HTML, CSS THRU REACT.JS LIBRARY
+	-CREATING SLIDER, INPUT AREA, CHECK BOX, DATEPICKER
+
+HTML: IMPORT DASH_HTML_COMPONENTS AS HTML
+-HAS A COMPONENT FOR EVERY HTML TAG
+-COMPOSE LAYOUT USING PYTHON STRUCTURES WITH THE HTML LIB
+-KEYWORD ARGUEMENTS DESCRIBE THE HTML ATTRIBUTES, PROVIDE CLASSES FOR ALL THE HTML TAGS
+=======================================================================================================
+# Import required packages
+import pandas as pd
+import plotly.express as px
+import dash
+import dash_html_components as html
+import dash_core_components as dcc
+
+# Read the airline data into pandas dataframe
+airline_data =  pd.read_csv('https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-DV0101EN-SkillsNetwork/Data%20Files/airline_data.csv', 
+                            encoding = "ISO-8859-1",
+                            dtype={'Div1Airport': str, 'Div1TailNum': str, 
+                                   'Div2Airport': str, 'Div2TailNum': str})
+
+# Randomly sample 500 data points. Setting the random state to be 42 so that we get same result.
+data = airline_data.sample(n=500, random_state=42)
+
+# Pie Chart Creation
+fig = px.pie(data, values='Flights', names='DistanceGroup', title='Distance group proportion by flights')
+
+# Create a dash application
+app = dash.Dash(__name__)
+
+# Get the layout of the application and adjust it.
+# Create an outer division using html.Div and add title to the dashboard using html.H1 component
+# Add description about the graph using HTML P (paragraph) component
+# Finally, add graph component.
+app.layout = html.Div(children=[html.H1('Airline Dashboard', style={'textAlign': 'center', 'color': '#503D36', 'font-size': 40}),
+                                html.P('Proportion of distance group (250 mile distance interval group) by flights.', style={'textAlign':'center', 'color': '#F57241'}),
+                                dcc.Graph(figure=fig),
+                                               
+                    ])
+
+# Run the application                   
+if __name__ == '__main__':
+    app.run_server()
+======================================================================================================
+DASH INTERACTIVE COMPONENTS
+
+-CALLBACK: A PYTHON FUNCTION THAT AUTOMATICALLY IS CALLED BY DASH WHENEVER AN INPUT COMPONENTS PROPERTY CHANGES
+@APP.CALLBACK(OUTPUT, INPUT)
+DEF CALLBACK_FUNCTION:
+	...	
+	...
+	...
+	RETURN SOME_RESULT
+
+CALLBACK WITH ONE INPUT
+	IMPORT PANDAS AS PD
+	IMPORT PLOTLY.EXPRESS AS PX
+	IMPORT DASH
+	IMPORT DASH_HTML_COMPONENTS AS HTML
+	IMPORT DASH_CORE_COMPONENTS AS DCC
+	FROM DASH.DEPENDENCIES IMPORT INPUT, OUTPUT
+	
+	AIRLINE_DATA= PD.READ_CSV('AIRLINE_2M.CSV', ENCODING='ISO-8859-1', DTYPE={
+		'DIV1AIRPORT': STR,
+		'DIV1TAILNUM': STR,
+		'DIV2AIRPORT': STR,
+		'DIV2TAILNUM': STR})
+	APP=DASH.DASH()
+	APP.LAYOUT= HTML.DIV(CHILDREN=[HTML.H1('AIRLINE DASHBOARD', STYLE{'TEXTALIGN':'CENTER', 'COLOR':COLORS['TEXT'], 'FONT-SIZE':40}),
+		HTML.DIV(["INPUT:", DCC.INPUT(ID='INPUT-YR', VALUE='2010', TYPE='NUMBER', STYLE={'HEIGHT':'50PX', 'FONT-SIZE':35}),], STYLE={'FONT-SIZE':40}),
+		HTML.BR(),
+		HTML.BR(),
+		HTML.DIV(DCC.GRAPH(ID='BAR-PLOT')), 
+	])
+
+	@APP.CALL_BACK(OUTPUT(COMPONENT_ID='BAR-PLOT', COMPONENT_PROPERTY='FIGURE'),
+			INPUT(COMPONENT_ID='INPUT-YR', COMPONENT_PROPERTY='VALUE'))
+	
+	DEF GET_GRAPH(ENTERED_YEAR):
+		DF= AIRLINE_DATA[AIRLINE_DATA['YEAR']==INT(ENTERED_YEAR)]
+		G1= DF.GROUPBY(['REPORTING_AIRLINE'])['FLIGHTS'].SUM().NLARGEST(10).RESET_INDEX()
+		FIG1= PX.BAR(G1, X='REPORTING_AIRLINE', Y='FLIGHTS', TITLE='TOP 10 CARRIERS' + STR(ENTERED_YEAR) + 'IN NUMBER OF FLIGHTS')
+		FIG1.UPDATE_LAYOUT()
+		RETURN FIG1
+
+	IF _NAME_ == '_MAIN_':
+		APP.RUN_SERVER(PORT=8002, HOST='127.0.0.1', DEBUG=TRUE)
+
+
+CALLBACK WITH 2 INPUTS
+
+	APP.LAYOUT= HTML.DIV(CHILDREN=[HTML.H1('AIRLINE DASHBOARD', STYLE{'TEXTALIGN':'CENTER', 'COLOR':COLORS['TEXT'], 'FONT-SIZE':40}),
+		HTML.DIV(["YEAR:", DCC.INPUT(ID='INPUT-YR', VALUE='2010', TYPE='NUMBER', STYLE={'HEIGHT':'50PX', 'FONT-SIZE':35}),], STYLE={'FONT-SIZE':40}),
+		HTML.DIV(["STATE ABBREVIATION:", DCC.INPUT(ID='INPUT-AB', VALUE='AL', TYPE='TEXT', STYLE={'HEIGHT':'50PX', 'FONT-SIZE':35}),], STYLE={'FONT-SIZE':40}),
+		HTML.BR(),
+		HTML.BR(),
+		HTML.DIV(DCC.GRAPH(ID='BAR-PLOT')), 
+	])
+...
+	@APP.CALL_BACK(OUTPUT(COMPONENT_ID='BAR-PLOT', COMPONENT_PROPERTY='FIGURE'),
+			[INPUT(COMPONENT_ID='INPUT-YR', COMPONENT_PROPERTY='VALUE'),
+			INPUT(COMPONENT_ID='INPUT-AB', COMPONENT_PROPERTY='VALUE')])
+
+	DEF GET_GRAPH(ENTERED_YEAR):
+		DF= AIRLINE_DATA[AIRLINE_DATA['YEAR']==INT(ENTERED_YEAR)] & (AIRLINE_DATA['ORIGINALSTATE']==ENTERED_STATE)]
+		G1= DF.GROUPBY(['REPORTING_AIRLINE'])['FLIGHTS'].SUM().NLARGEST(10).RESET_INDEX()
+		FIG1= PX.BAR(G1, X='REPORTING_AIRLINE', Y='FLIGHTS', TITLE='TOP 10 CARRIERS' + STR(ENTERED_YEAR) + 'IN NUMBER OF FLIGHTS')
+		FIG1.UPDATE_LAYOUT()
+		RETURN FIG1
+
+	IF _NAME_ == '_MAIN_':
+		APP.RUN_SERVER(PORT=8002, HOST='127.0.0.1', DEBUG=TRUE)
