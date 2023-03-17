@@ -1,0 +1,22 @@
+GETTING TABLE AND COLUMN DETAILS
+=====================================================================================================
+-DB systems typically contain systems/catalog tables from where you can query the list of tables and get their properties
+
+-getting list of tables in DB and properties
+	-DB2: SYSCAT.TABLES
+		select * from syscat.tables (too many tables)
+			select TABSCHEMA, TABNAME, CREATE_TIME
+			from syscat.tables
+			where TABSCHEMA = 'username'
+	
+	-SQL Server: INFORMATION_SCHEMA.TABLES
+	-Oracle: ALL_TABLES or USER_TABLES
+
+-getting list of columns in table
+	select * from syscat.columns
+	where tabname = 'dogs'
+
+-obtain specific column properties
+	select distinct(name), coltype, length
+	from sysibm.syscolumns
+	where tbname = 'dogs'

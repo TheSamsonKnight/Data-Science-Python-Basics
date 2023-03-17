@@ -1,0 +1,59 @@
+WRITING CODE USING DB-API
+=================================================
+	DB-API SKELETON
+-------------------------------------------------------------------------------------------------------
+from dbmodule import connect		>import DB module by using connect API from that module
+
+#creat connection object		>open/connect to DB, and pass in parameters
+Connection = connect('DBname','username','pw')	>creates connection object
+
+#create cursor object			>create cursor object on the connection object
+Cursor = connection.cursor()
+
+#run queries				>cursor is used to run queries and fetch results
+Cursor.execute('select * from mytable')
+Results = cursor.fetchall()		
+
+#frees resources/close			
+Cursor.close()				>avoid unused connections taking up resources
+Connection.close() 			>close connections
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	IBM DB2
+-------------------------------------------------------------------------------------------------------
+~IBM DB API provides a variety of useful Python functions for accessing and manipulating data in an IBM data server db:
+	functions for connecting to a DB
+	preparing and issuing SQL statements
+	fetching rows from results sets
+	calling stored procedures
+	commiting and rolling back transactions
+	handling errors
+	retrieving metadata
+~IMB DB API uses IBM data server driver for ODBC and CLI APIs to connect to IBM DB2 and Informix
+
+import IBM DB library into Python Application
+(connecting to DB2 requries connection credentials)
+ex:
+dsn_driver = "{IBM DB2 ODBC DRIVER}"	
+dsn_database = "BLUDB"
+dsn_hostname = "YourDB2Hostname"
+dsn_port = "50000"
+dsn_protocol = "TCPIP"
+dsn_uid = "******"
+dsn_pwd = "******"
+
+#create database connection
+dsn = (						>>>connection object dsn to store credentials
+	"DRIVER={{IBM DB2 ODBC DRIVER}};"
+	"DATABASE={0};"
+	"HOSTNAME={1};"
+	"PORT={2};"
+	"PROTOCOL=TCPIP;"
+	"UID={3};"
+	"PWD={4};".format(dsn_database, dsn_hostname, dsn_port, dsn_uid, dsn_pwd)
+
+try:
+	conn= ibm_db.connect(dsn, "", "")
+	print ("Connected")
+
+except:
+	print ("Unable to Connect")

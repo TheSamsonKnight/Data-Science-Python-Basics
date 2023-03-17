@@ -1,0 +1,49 @@
+Creating tables, loading data and querying data
+	IBM DB2 Cloud
+=====================================================================================================
+
+-create table:	ibm_db.exec_immediate() >>>function
+	-connection: valid DB connection resource that is returned from ibm_db.connect or 		ibm_db.pconnect
+	-statement: string containing SQL statement
+	-options: optional parameter that includes a DICT that specifies the type of cursor toreturn 		result sets
+
+ex:
+stmt = ibm_db.exec_immediate(conn,			>>>1st parameter
+ "CREATE TABLE Trucks(					>>2nd parameter
+	serial_no varchar(20) PRIMARY KEY NOT NULL,
+	model VARCHAR(20) NOT NULL
+	manufacturer VARCHAR(20) NOT NULL,
+	Engine_size VARCHAR(20) NOT NULL,
+	Truck_Class VARCHAR(20) NOT NULL) "
+)							>>>2nd parameter
+
+stmt = ibm_db.exec_immediate(conn,
+ "INSERT INTO TRUCKS(serial_no, model, manufacturer, 
+  Engine_size,Truck_class) VALUES( 'A1234', 'LONESTAR',
+	'International Trucks', 'Cummins ISx15', 'Class 8');"
+)
+
+
+-add aditional rows(data) using ibm_db.exec_immediate
+------------------------------------------------------------------------------------------------------
+-now that python code has been connected to a DBinstance and DBtable has been created and populated with data, fetch data
+
+-query data with Python
+
+ex:
+stmt = ibm_db.exec_immediate(conn, "SELECT * FROM TRUCKS")	>>>1st & 2nd parameter
+
+ibm_db.fetch_both(stmt)			>>> outputs the fields of data in Trucks table
+------------------------------------------------------------------------------------------------------
+
+RETRIEVE DATA USING PANDAS
+
+#Pandas: popular python library that contains high level data structures and manipulation tools that ease data analytics
+
+ex:
+import pandas
+import ibm_db_dbi
+pconn = ibm_db_dbi.Connection(conn)
+df = pandas.read_sql('Select * from Trucks', pconn)
+df
+-load data from trucks table into dataframe DF, 

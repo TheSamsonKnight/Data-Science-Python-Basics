@@ -1,0 +1,28 @@
+Working with Real World Datasets
+=====================================================================================================
+-CSV: txt files which contain data values seperated by commas or semicolons
+-attribute labels(id,name,department, etc) map to column labels
+-CSV files can have a header row that contains names of attributes
+	-default colums names may not be DB or query friendly
+	-DB parser assumes uppercase names by default
+-Use double quotes"" to specify mixed-case columns names
+-By default spaces are mapped as underscores
+	-name of dog >>> name_of_dog
+	-special characters like () or [] may also get mapped as _
+-Using quotes in JPnotebook:
+	-assign queries to variables
+		 selectQuert = 'select "Id" from dogs'
+	-use \ in cases where the query contains single quotes: 
+		selectQuery= 'select * from dogs where "name_of_dog" = \'huggy\'
+-splitting queries into multiple lines in JP:
+	-use \ to split query into multiple line
+		%sql select "Id", "name_of_dog", \
+		From dogs
+		where "name_of_dog"= 'huggy'
+	-Or use %%sql in the 1st row of the cell in notebook:
+		%%sql
+		select "Id", "name_of_dog",
+		from dogs
+		where "name_of_dog" = "huggy"
+-restricting the #of rows retrieved
+	-select # from census_data limit 3

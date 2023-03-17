@@ -1,0 +1,57 @@
+TRIGGER
+=====================================================================================================
+*SQL code that automatically execute in response to events on a particular table
+
+Advantages:
+-forcing security approvals on the table/DB
+-triggers check integrity of data
+-counteracting invalid exchanges
+-triggers handle errors
+-useful for inspecting the data
+
+Disadvantages:
+-can be difficult to troubleshoot because they execute automatically in the DB
+-can increase the overhead of the DB
+-can only provide extended validations
+
+Syntax:
+Create Trigger Trigger-Name
+(Before|After)
+[insert|update|delete] on [table-name]
+[for each row|for each colomn]
+[Trigger-body]
+
+ex:
+Create Trigger sample_student
+before INSERT
+ON student
+FOR EACH ROW
+SET new.marks = new.marks+6;
+-----------------------------------------------------------------------------------------------------
+NESTED TRIGGERS
+* actions that automatically execute when a certain DB operation is performed
+=====================================================================================================
+
+OPERATIONS
+
+*Drop: command to remove a trigger from a DB
+	DROP TRIGGER trigger-name;
+
+*Display: command to show triggers from the DB
+	SHOW TRIGGERS
+	IN DB-name;
+
+*Before Insert: Before Insert Triggers are used to update/validate record values before theyre saved to DB
+	CREATE TRIGGER trigger-name
+	BEFORE INSERT
+	ON table-name
+	FOR EACH ROW
+	SET opertaion/conditions
+	
+*After Insert: After Insert Triggers are used to access field values that are set by the systems and to effect changes in other records
+	CREATE TRIGGER trigger-name
+	AFTER INSERT
+	ON table-name
+	FOR EACH ROW
+	SET operation/conditions
+

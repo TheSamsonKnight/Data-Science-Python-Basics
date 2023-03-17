@@ -1,0 +1,12 @@
+Analyzing data with Python
+====================================================================================================
+
+
+Using PANDAS to retrieve data from IBM DB2 table
+	import pandas
+	import ibm_db_dbi
+	pconn = ibm_db_dpi.Connection(conn)
+	df = pandas.read_sql("select * from mcdonalds_nutrition", pconn)
+	df (output)>>> df.head() or df.describe(include='all')
+
+#Describe method: used to understand the summary statistics associated with sodium
